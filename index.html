@@ -1,0 +1,108 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bindas FF Panel</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #10131c;
+      color: white;
+      text-align: center;
+    }
+    header {
+      background: #20283a;
+      padding: 24px 12px;
+      border-bottom: 2px solid #35d07f;
+    }
+    h1 { color: #35d07f; }
+    main { padding: 20px; }
+    .card {
+      background: #20283a;
+      padding: 18px;
+      margin: 16px auto;
+      border-radius: 14px;
+      max-width: 420px;
+    }
+    button {
+      background: #35d07f;
+      color: #10131c;
+      border: 0;
+      border-radius: 8px;
+      padding: 12px 18px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    input {
+      width: 85%;
+      padding: 12px;
+      margin: 8px;
+      border-radius: 8px;
+      border: 1px solid #777;
+    }
+    footer { padding: 20px; color: #bbb; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>BINDAS FF PANEL</h1>
+    <p>Your Gaming Companion</p>
+  </header>
+  <main>
+    <div class="card">
+      <h2>Sensitivity Guide</h2>
+      <p>Practice different settings to find what suits your device.</p>
+      <label>General: <span id="value">150</span></label>
+      <input type="range" min="0" max="200" value="150"
+        oninput="document.getElementById('value').textContent=this.value">
+    </div>
+    <div class="card">
+      <h2>HUD & Gaming Tips</h2>
+      <p>Learn controls, aim practice, and performance tips.</p>
+    </div>
+    <div class="card">
+      <h2>Reaction Time Test</h2>
+      <p id="message">Press start, then tap when the box turns green.</p>
+      <button id="start">Start Test</button>
+      <button id="tap" disabled>Tap Now!</button>
+      <p id="result"></p>
+    </div>
+  </main>
+  <footer>Bindas FF Panel | Fan-made companion</footer>
+  <script>
+    let ready = false, startTime = 0, timer;
+    const message = document.getElementById('message');
+    const start = document.getElementById('start');
+    const tap = document.getElementById('tap');
+    const result = document.getElementById('result');
+
+    start.onclick = () => {
+      clearTimeout(timer);
+      ready = false;
+      tap.disabled = true;
+      result.textContent = '';
+      message.textContent = 'Wait for green...';
+      timer = setTimeout(() => {
+        ready = true;
+        startTime = Date.now();
+        message.textContent = 'TAP NOW!';
+        message.style.color = '#35d07f';
+        tap.disabled = false;
+      }, 1500 + Math.random() * 2500);
+    };
+
+    tap.onclick = () => {
+      if (!ready) return;
+      result.textContent = 'Your reaction time: ' +
+        (Date.now() - startTime) + ' ms';
+      ready = false;
+      tap.disabled = true;
+      message.textContent = 'Test complete!';
+      message.style.color = 'white';
+    };
+  </script>
+</body>
+</html>
